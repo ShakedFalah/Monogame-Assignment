@@ -6,8 +6,8 @@ namespace MonogameProject.Engine.Statics
 {
     internal class UpdateManager : ISystem
     {
-        private static HashSet<Interfaces.IStartable> startables = [];
-        private static HashSet<Interfaces.IUpdateable> updateables = [];
+        private HashSet<Interfaces.IStartable> startables = [];
+        private HashSet<Interfaces.IUpdateable> updateables = [];
 
         public void Start()
         {
@@ -25,7 +25,7 @@ namespace MonogameProject.Engine.Statics
             }
         }
 
-        public static void Register(object obj)
+        public void TryRegister(object obj)
         {
             if (obj == null)
             {

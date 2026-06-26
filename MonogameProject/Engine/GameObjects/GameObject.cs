@@ -1,4 +1,5 @@
 ﻿using MonogameProject.Engine.Components;
+using MonogameProject.Engine.Systems;
 using System;
 using System.Collections.Generic;
 
@@ -6,23 +7,28 @@ namespace MonogameProject.Engine.GameObjects
 {
     internal class GameObject
     {
-        private readonly Dictionary<Type, List<Component>> _components = [];
-        public GameObject()
+        public Scene Scene { get; }
+        public Transform Transform { get; }
+        private readonly Dictionary<Type, Component> _components = [];
+        internal GameObject(Scene scene)
         {
-            Initialize();
-        }
-
-        protected virtual void Initialize()
-        {
+            this.Scene = scene;
+            this.Transform = new Transform();
         }
 
         public T AddComponent<T>() where T : Component, new()
         {
+            var type = typeof(T);
+            if (_components.ContainsKey(type))
+            {
+                throw new Exception($"Component {type} already exists");
+            }
             T component = new()
             {
                 parent = this
             };
-            _components[typeof(T)].Add(component);
+            _components[type] = component;
+            Scene.UpdateManager.TryRegister(component);
 
             return component;
         }
@@ -31,10 +37,15 @@ namespace MonogameProject.Engine.GameObjects
         {
             if (_components.TryGetValue(typeof(T), out var component))
             {
-                return (T)component[0];
+                return (T)component;
             }
 
             return null;
+        }
+
+        public bool HasComponent<T>() where T : Component 
+        {
+            return _components.ContainsKey(typeof(T));
         }
     }
 }
