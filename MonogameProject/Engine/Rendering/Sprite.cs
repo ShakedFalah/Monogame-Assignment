@@ -7,7 +7,7 @@ namespace MonogameProject.Engine.Rendering
     {
         protected Rectangle _sourceRectangle;
         public Rectangle SourceRectangle => _sourceRectangle;
-        public SpriteOrigin SpriteOrigin { get; private set; }
+        public SpriteOrigin SpriteOrigin { get; private set; } = new SpriteOrigin();
         public Vector2 AbsoluteOrigin
         {
             get

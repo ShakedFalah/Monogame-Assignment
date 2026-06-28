@@ -2,7 +2,8 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using MonogameProject.Engine;
-using MonogameProject.Engine.Rendering;
+using MonogameProject.Engine.Components;
+using MonogameProject.Engine.GameObjects;
 
 namespace MonogameProject
 {
@@ -29,10 +30,15 @@ namespace MonogameProject
 
         protected override void Initialize()
         {
-            LayerManager.Initialize();
+            Engine.Engine.Initialize(GraphicsDevice);
             _activeScene = new Scene(GraphicsDevice);
             // TODO: Add your initialization logic here
+            GameObject button = new GameObject(_activeScene);
+            button.AddComponent<UIButton>();
+            button.Transform.position = _screenCenter;
+            button.Transform.scale = new Vector2(50, 50);
 
+            _activeScene.Start();
             base.Initialize();
         }
 
@@ -43,7 +49,7 @@ namespace MonogameProject
 
         protected override void Update(GameTime gameTime)
         {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
+            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == Microsoft.Xna.Framework.Input.ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
             _activeScene.Update(gameTime);

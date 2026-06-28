@@ -15,8 +15,8 @@ namespace MonogameProject.Engine.Rendering
 
         public SpriteOrigin()
         {
-            origin = Vector2.Zero;
-            originType = OriginType.absolute;
+            origin = new Vector2(0.5f, 0.5f);
+            originType = OriginType.relative;
         }
         public SpriteOrigin(Vector2 origin, OriginType originType = OriginType.absolute)
         {

@@ -7,17 +7,16 @@ namespace MonogameProject.Engine.Components
 {
     internal class SpriteRenderer : Component, Interfaces.IRenderable
     {
-        public Sprite sprite;
-        public Color tint;
-        public Vector2 origin;
-        public SpriteEffects effects;
-        public Vector2 size;
+        public Sprite sprite = null;
+        public Color tint = Color.White;
+        public SpriteEffects effects = SpriteEffects.None;
         private int _orderInLayer;
         private RenderLayer _layer;
         public Rectangle DestinationRectangle { get; private set; }
 
-        public SpriteRenderer(GameObject parent) : base(parent)
+        public SpriteRenderer() : base()
         {
+            SetLayer(LayerManager.Instance.Get("Default"));
         }
 
         public RenderLayer Layer()
@@ -41,14 +40,21 @@ namespace MonogameProject.Engine.Components
 
         public void Render(SpriteBatch spriteBatch)
         {
-            DestinationRectangle = new Rectangle(gameObject.Transform.position, new Point((int)(size.X * gameObject.Transform.scale.X), (int)(size.Y * gameObject.Transform.scale.Y)));
-            spriteBatch.Draw(sprite.Texture(), DestinationRectangle, sprite.SourceRectangle, 
-                tint, gameObject.Transform.rotation, origin, effects, 0);
-        }
+            if (sprite == null)
+            {
+                return;
+            }
 
-        public Vector2 RelativeOrigin()
-        {
-            return new Vector2(sprite.Texture().Width * origin.X, sprite.SourceRectangle.Height * origin.Y);
+            spriteBatch.Draw(
+                sprite.Texture(),
+                gameObject.Transform.position,
+                sprite.SourceRectangle,
+                tint,
+                gameObject.Transform.rotation,
+                sprite.AbsoluteOrigin,
+                gameObject.Transform.scale,
+                effects,
+                0f);
         }
     }
 }

@@ -1,6 +1,8 @@
-﻿using MonogameProject.Engine.Components;
+﻿using MonogameProject.Engine.Attributes;
+using MonogameProject.Engine.Components;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace MonogameProject.Engine.GameObjects
 {
@@ -9,32 +11,46 @@ namespace MonogameProject.Engine.GameObjects
         public Scene Scene { get; }
         public Transform Transform { get; }
         private readonly Dictionary<Type, Component> _components = [];
+        private readonly HashSet<Type> _constructing = new();
         internal GameObject(Scene scene)
         {
             this.Scene = scene;
             this.Transform = new Transform();
         }
 
-        public T AddComponent<T>() where T : Component, new()
+        public Component AddComponent(Type type)
         {
-            var type = typeof(T);
+            if (_constructing.Contains(type))
+            {
+                return null;
+            }
+
+            _constructing.Add(type);
+            foreach (var attribute in type.GetCustomAttributes(typeof(RequireComponentAttribute), true))
+            {
+                var require = (RequireComponentAttribute)attribute;
+
+                if (!HasComponent(require.ComponentType))
+                {
+                    AddComponent(require.ComponentType);
+                }
+            }
+
+            _constructing.Remove(type);
             if (_components.ContainsKey(type))
             {
-                throw new Exception($"Component {type} already exists");
+                return GetComponent(type);
             }
-            T component = new()
-            {
-                gameObject = this
-            };
+            Component component = (Component)Activator.CreateInstance(type);
+            component.Initialize(this);
             _components.Add(type, component);
             Scene.RegisterAll(component);
 
             return component;
         }
 
-        public void RemoveComponent<T>() where T : Component
+        public void RemoveComponent(Type type)
         {
-            var type = typeof(T);
             if (!(_components.ContainsKey(type)))
             {
                 throw new Exception($"Tried to remove component {type}, but it doesn't exist");
@@ -44,19 +60,43 @@ namespace MonogameProject.Engine.GameObjects
             Scene.UnregisterAll(type);
         }
 
-        public T GetComponent<T>() where T : Component
+
+        public Component? GetComponent(Type type)
         {
-            if (_components.TryGetValue(typeof(T), out var component))
+            if (_components.TryGetValue(type, out var component))
             {
-                return (T)component;
+                return component;
             }
 
             return null;
         }
 
-        public bool HasComponent<T>() where T : Component 
+        public bool HasComponent(Type type)
         {
-            return _components.ContainsKey(typeof(T));
+            return _components.ContainsKey(type);
         }
+
+        public T AddComponent<T>() where T : Component, new()
+        {
+            return (T)AddComponent(typeof(T));
+        }
+
+        public void RemoveComponent<T>() where T : Component
+        {
+            RemoveComponent(typeof(T));
+        }
+
+        public T? GetComponent<T>() where T : Component
+        {
+            return (T)GetComponent(typeof(T));
+        }
+
+        public bool HasComponent<T>() where T : Component
+        {
+            return HasComponent(typeof(T));
+        }
+
+
+
     }
 }

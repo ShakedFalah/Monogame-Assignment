@@ -17,14 +17,15 @@ namespace MonogameProject.Engine.Systems
         {
             _graphicsDevice = graphicsDevice;
             _spriteBatch = new SpriteBatch(graphicsDevice);
+            _renderables = new();
         }
 
         public void Update(GameTime gameTime)
         {
             _spriteBatch.Begin(SpriteSortMode.Deferred);
-            foreach (var renderable in _renderables
-                .OrderBy(renderable => renderable.Layer.Order)
-                .ThenBy(renderable => renderable.OrderInLayer))
+            foreach (IRenderable renderable in _renderables
+                .OrderBy(renderable => renderable.Layer().Order)
+                .ThenBy(renderable => renderable.OrderInLayer()))
             {
                 renderable.Render(_spriteBatch);
             }

@@ -12,7 +12,7 @@ namespace MonogameProject.Engine.Rendering
         private readonly Dictionary<string, RenderLayer> _layers = new();
         private LayerManager()
         {
-
+            Create("Default", 10);
         }
         public static void Initialize()
         {

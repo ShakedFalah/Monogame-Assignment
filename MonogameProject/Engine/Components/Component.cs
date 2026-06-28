@@ -6,9 +6,13 @@ namespace MonogameProject.Engine.Components
     {
         public GameObject gameObject;
 
-        public Component(GameObject parent)
+        public Component()
         {
-            this.gameObject = parent;
+        }
+
+        public void Initialize(GameObject gameObject)
+        {
+            this.gameObject = gameObject;
         }
     }
 }
