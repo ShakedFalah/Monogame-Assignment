@@ -1,5 +1,4 @@
 ﻿using MonogameProject.Engine.Components;
-using MonogameProject.Engine.Systems;
 using System;
 using System.Collections.Generic;
 
@@ -25,12 +24,24 @@ namespace MonogameProject.Engine.GameObjects
             }
             T component = new()
             {
-                parent = this
+                gameObject = this
             };
-            _components[type] = component;
-            Scene.UpdateManager.TryRegister(component);
+            _components.Add(type, component);
+            Scene.RegisterAll(component);
 
             return component;
+        }
+
+        public void RemoveComponent<T>() where T : Component
+        {
+            var type = typeof(T);
+            if (!(_components.ContainsKey(type)))
+            {
+                throw new Exception($"Tried to remove component {type}, but it doesn't exist");
+            }
+            Component component = _components[type];
+            _components.Remove(type);
+            Scene.UnregisterAll(type);
         }
 
         public T GetComponent<T>() where T : Component

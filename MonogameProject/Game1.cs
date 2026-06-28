@@ -1,6 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using MonogameProject.Engine;
+using MonogameProject.Engine.Rendering;
 
 namespace MonogameProject
 {
@@ -8,6 +10,7 @@ namespace MonogameProject
     {
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
+        private Scene _activeScene;
 
         public static Vector2 _screenCenter;
 
@@ -26,6 +29,8 @@ namespace MonogameProject
 
         protected override void Initialize()
         {
+            LayerManager.Initialize();
+            _activeScene = new Scene(GraphicsDevice);
             // TODO: Add your initialization logic here
 
             base.Initialize();
@@ -33,8 +38,6 @@ namespace MonogameProject
 
         protected override void LoadContent()
         {
-            _spriteBatch = new SpriteBatch(GraphicsDevice);
-
             // TODO: use this.Content to load your game content here
         }
 
@@ -43,6 +46,7 @@ namespace MonogameProject
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
+            _activeScene.Update(gameTime);
             // TODO: Add your update logic here
 
             base.Update(gameTime);
@@ -51,10 +55,7 @@ namespace MonogameProject
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
-            _spriteBatch.Begin();
-
-            _spriteBatch.End();
-
+            _activeScene.Draw(gameTime);
             // TODO: Add your drawing code here
 
             base.Draw(gameTime);
