@@ -1,0 +1,21 @@
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using MonogameProject.MyEngine.EngineManagers;
+using MonogameProject.MyEngine.Rendering;
+using System.Text;
+
+namespace MonogameProject.MyEngine.Sprites
+{
+    internal class TextSprite : PivotObject
+    {
+        public SpriteFont font;
+        public StringBuilder text;
+        public override Vector2 Size => font.MeasureString(text);
+
+        public TextSprite()
+        {
+            font = Engine.Assets.GetFont(AssetsManager.defaultName);
+            text = new StringBuilder("");
+        }
+    }
+}

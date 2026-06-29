@@ -1,42 +1,38 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using MonogameProject.Engine;
-using MonogameProject.Engine.Components;
-using MonogameProject.Engine.GameObjects;
+using MonogameProject.MyEngine;
+using MonogameProject.MyEngine.Components;
+using MonogameProject.MyEngine.GameObjects;
+using MonogameProject.MyEngine.Rendering;
 
 namespace MonogameProject
 {
     public class Game1 : Game
     {
-        private GraphicsDeviceManager _graphics;
-        private SpriteBatch _spriteBatch;
         private Scene _activeScene;
 
-        public static Vector2 _screenCenter;
 
         public Game1()
         {
-            _graphics = new GraphicsDeviceManager(this);
-            Content.RootDirectory = "Content";
-            IsMouseVisible = true;
-
-            _graphics.PreferredBackBufferHeight = 1080;
-            _graphics.PreferredBackBufferWidth = 1920;
-            _graphics.IsFullScreen = true;
-
-            _screenCenter = new Vector2(_graphics.PreferredBackBufferWidth * 0.5f, _graphics.PreferredBackBufferHeight * 0.5f);
+            Engine.Load(this);
         }
 
         protected override void Initialize()
         {
-            Engine.Engine.Initialize(GraphicsDevice);
+            Engine.Instance.Initialize(GraphicsDevice);
             _activeScene = new Scene(GraphicsDevice);
+            RenderLayer uiLayer = LayerManager.Instance.CreateLayer("UI", 20);
             // TODO: Add your initialization logic here
             GameObject button = new GameObject(_activeScene);
             button.AddComponent<UIButton>();
-            button.Transform.position = _screenCenter;
-            button.Transform.scale = new Vector2(50, 50);
+            button.AddComponent<UIText>();
+            SpriteRenderer spriteRenderer = button.GetComponent<SpriteRenderer>().SetLayer(uiLayer);
+            UIText text = button.GetComponent<UIText>().SetLayer(uiLayer).SetOrder(1);
+            spriteRenderer.SetSize(new Vector2(50, 50));
+            text.SetText("Hello");
+
+            button.Transform.position = Engine.Instance.GraphicsManager.ScreenCenter;
 
             _activeScene.Start();
             base.Initialize();
