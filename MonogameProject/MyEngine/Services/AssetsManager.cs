@@ -2,7 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 
-namespace MonogameProject.MyEngine.EngineManagers
+namespace MonogameProject.MyEngine.Services
 {
     internal class AssetsManager
     {

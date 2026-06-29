@@ -1,7 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using MonogameProject.MyEngine.Interfaces;
-using MonogameProject.MyEngine.Statics;
 using MonogameProject.MyEngine.Systems;
 
 namespace MonogameProject.MyEngine

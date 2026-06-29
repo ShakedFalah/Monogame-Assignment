@@ -2,7 +2,7 @@
 using MonogameProject.MyEngine.Interfaces;
 using System.Collections.Generic;
 
-namespace MonogameProject.MyEngine.Statics
+namespace MonogameProject.MyEngine.Systems
 {
     internal class LifecycleSystem : ISystem, Interfaces.IObservable<object>
     {

@@ -19,9 +19,9 @@ namespace MonogameProject.MyEngine.Components
         public event Action OnClick;
         private SpriteRenderer _spriteRenderer;
 
-        public Sprite normal;
-        public Sprite hover;
-        public Sprite pressed;
+        public Sprite normalSprite;
+        public Sprite hoverSprite;
+        public Sprite pressedSprite;
 
         public Rectangle? bounds;
 
@@ -30,9 +30,9 @@ namespace MonogameProject.MyEngine.Components
 
         public UIButton()
         {
-            normal = new SolidColorSprite(Color.SlateGray);
-            hover = new SolidColorSprite(Color.LightSlateGray);
-            pressed = new SolidColorSprite(Color.DarkSlateGray);
+            normalSprite = new SolidColorSprite(Color.SlateGray);
+            hoverSprite = new SolidColorSprite(Color.LightSlateGray);
+            pressedSprite = new SolidColorSprite(Color.DarkSlateGray);
         }
         public void Start()
         {
@@ -101,13 +101,13 @@ namespace MonogameProject.MyEngine.Components
             switch (_state)
             {
                 case ButtonState.Pressed:
-                    _spriteRenderer.sprite = pressed;
+                    _spriteRenderer.sprite = pressedSprite;
                     break;
                 case ButtonState.Hovered:
-                    _spriteRenderer.sprite = hover;
+                    _spriteRenderer.sprite = hoverSprite;
                     break;
                 case ButtonState.Normal:
-                    _spriteRenderer.sprite = normal;
+                    _spriteRenderer.sprite = normalSprite;
                     break;
             }
         }

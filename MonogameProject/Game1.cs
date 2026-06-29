@@ -5,14 +5,12 @@ using MonogameProject.MyEngine;
 using MonogameProject.MyEngine.Components;
 using MonogameProject.MyEngine.GameObjects;
 using MonogameProject.MyEngine.Rendering;
+using MonogameProject.MyEngine.Services;
 
 namespace MonogameProject
 {
     public class Game1 : Game
     {
-        private Scene _activeScene;
-
-
         public Game1()
         {
             Engine.Load(this);
@@ -21,21 +19,29 @@ namespace MonogameProject
         protected override void Initialize()
         {
             Engine.Instance.Initialize(GraphicsDevice);
-            _activeScene = new Scene(GraphicsDevice);
+            Scene defaultScene = Engine.SceneManager.AddScene("Default");
+            Scene empty = Engine.SceneManager.AddScene("Empty");
             RenderLayer uiLayer = LayerManager.Instance.CreateLayer("UI", 20);
             // TODO: Add your initialization logic here
-            GameObject button = new GameObject(_activeScene);
-            button.AddComponent<UIButton>();
-            button.AddComponent<UIText>();
-            SpriteRenderer spriteRenderer = button.GetComponent<SpriteRenderer>().SetLayer(uiLayer);
-            UIText text = button.GetComponent<UIText>().SetLayer(uiLayer).SetOrder(1);
+            GameObject buttonObject = new GameObject(defaultScene);
+            buttonObject.AddComponent<UIButton>();
+            buttonObject.AddComponent<UIText>();
+            SpriteRenderer spriteRenderer = buttonObject.GetComponent<SpriteRenderer>().SetLayer(uiLayer);
+            UIText text = buttonObject.GetComponent<UIText>().SetLayer(uiLayer).SetOrder(1);
+            UIButton button = buttonObject.GetComponent<UIButton>();
             spriteRenderer.SetSize(new Vector2(50, 50));
+            button.OnClick += setSceneTo;
             text.SetText("Hello");
 
-            button.Transform.position = Engine.Instance.GraphicsManager.ScreenCenter;
+            buttonObject.Transform.position = Engine.Instance.GraphicsManager.ScreenCenter;
 
-            _activeScene.Start();
+            Engine.SceneManager.SetScene("Default");
             base.Initialize();
+        }
+
+        public void setSceneTo()
+        {
+            Engine.SceneManager.SetScene("Empty");
         }
 
         protected override void LoadContent()
@@ -48,7 +54,7 @@ namespace MonogameProject
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == Microsoft.Xna.Framework.Input.ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            _activeScene.Update(gameTime);
+            Engine.SceneManager.Update(gameTime);
             // TODO: Add your update logic here
 
             base.Update(gameTime);
@@ -56,9 +62,9 @@ namespace MonogameProject
 
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
-            _activeScene.Draw(gameTime);
             // TODO: Add your drawing code here
+
+            Engine.SceneManager.Draw(gameTime);
 
             base.Draw(gameTime);
         }

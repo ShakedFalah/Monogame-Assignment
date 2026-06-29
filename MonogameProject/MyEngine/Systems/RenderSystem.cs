@@ -22,6 +22,7 @@ namespace MonogameProject.MyEngine.Systems
 
         public void Update(GameTime gameTime)
         {
+            _graphicsDevice.Clear(Color.CornflowerBlue);
             _spriteBatch.Begin(SpriteSortMode.Deferred);
             foreach (IRenderable renderable in _renderables
                 .OrderBy(renderable => renderable.Layer().Order)

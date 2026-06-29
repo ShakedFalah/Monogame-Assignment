@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace MonogameProject.MyEngine.EngineManagers
+namespace MonogameProject.MyEngine.Services
 {
     internal class GraphicsManager
     {

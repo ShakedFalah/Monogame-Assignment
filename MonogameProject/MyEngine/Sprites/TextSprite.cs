@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using MonogameProject.MyEngine.EngineManagers;
 using MonogameProject.MyEngine.Rendering;
+using MonogameProject.MyEngine.Services;
 using System.Text;
 
 namespace MonogameProject.MyEngine.Sprites

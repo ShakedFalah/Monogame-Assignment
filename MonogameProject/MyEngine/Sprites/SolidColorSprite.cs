@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using MonogameProject.MyEngine.EngineManagers;
+using MonogameProject.MyEngine.Services;
 
 namespace MonogameProject.MyEngine.Sprites
 {
