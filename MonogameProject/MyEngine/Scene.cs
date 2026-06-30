@@ -8,11 +8,13 @@ namespace MonogameProject.MyEngine
     {
         public LifecycleSystem Lifecycle { get; }
         public RenderSystem Renderer { get; }
+        public InputSystem Input { get; }
 
         public Scene(GraphicsDevice graphicsDevice)
         {
             this.Lifecycle = new();
             this.Renderer = new(graphicsDevice);
+            this.Input = new();
         }
 
         public void Start()
@@ -23,6 +25,7 @@ namespace MonogameProject.MyEngine
         public void Update(GameTime gameTime)
         {
             Lifecycle.Update(gameTime);
+            Input.Update(gameTime);
         }
 
         public void Draw(GameTime gameTime)
