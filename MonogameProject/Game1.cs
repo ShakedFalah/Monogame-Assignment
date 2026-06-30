@@ -54,8 +54,8 @@ namespace MonogameProject
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == Microsoft.Xna.Framework.Input.ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            Engine.SceneManager.Update(gameTime);
             // TODO: Add your update logic here
+            Engine.Update(gameTime);
 
             base.Update(gameTime);
         }
@@ -64,7 +64,7 @@ namespace MonogameProject
         {
             // TODO: Add your drawing code here
 
-            Engine.SceneManager.Draw(gameTime);
+            Engine.Draw(gameTime);
 
             base.Draw(gameTime);
         }

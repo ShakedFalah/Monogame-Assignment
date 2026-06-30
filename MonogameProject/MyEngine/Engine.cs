@@ -13,6 +13,7 @@ namespace MonogameProject.MyEngine
         public GraphicsManager GraphicsManager { get; private set; }
         public static AssetsManager Assets { get; private set; }
         public static SceneManager SceneManager { get; private set; }
+        public static InputManager InputManager { get; private set; }
         private Engine(Game game)
         {
             if (Instance != null)
@@ -23,6 +24,7 @@ namespace MonogameProject.MyEngine
             GraphicsManager = new GraphicsManager(game);
             Assets = new AssetsManager(game.Content);
             SceneManager = new SceneManager(game.GraphicsDevice);
+            InputManager = new InputManager();
 
             game.Content.RootDirectory = "Content";
         }
@@ -33,11 +35,24 @@ namespace MonogameProject.MyEngine
                 Instance = new Engine(game);
             }
         }
+
         public void Initialize(GraphicsDevice graphicsDevice)
         {
             GraphicsManager.Initialize(graphicsDevice);
 
             LayerManager.Initialize();
         }
+
+        public static void Update(GameTime gameTime)
+        {
+            InputManager.Update(gameTime);
+            SceneManager.Update(gameTime);
+        }
+
+        public static void Draw(GameTime gameTime)
+        {
+            SceneManager.Draw(gameTime);
+        }
+
     }
 }
