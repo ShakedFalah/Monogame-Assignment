@@ -10,9 +10,9 @@ namespace MonogameProject.MyEngine.Sprites
 
         public SolidColorSprite(Color color) : base()
         {
-            _colorTexture = new Texture2D(GraphicsManager.GraphicsDevice, 2, 2);
-            _colorTexture.SetData([color, color, color, color]);
-            SetSourceRectangle(new Rectangle(0, 0, 2, 2));
+            _colorTexture = new Texture2D(GraphicsManager.GraphicsDevice, 1, 1);
+            _colorTexture.SetData([color]);
+            SetSourceRectangle(new Rectangle(0, 0, 1, 1));
         }
 
         public override Texture2D Texture() => _colorTexture;

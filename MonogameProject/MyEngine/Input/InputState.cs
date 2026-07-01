@@ -2,6 +2,7 @@
 
 namespace MonogameProject.MyEngine.Input
 {
+    // A class to save the current and previous state of all input
     public class InputState
     {
         private KeyboardState _currentKeyboard;

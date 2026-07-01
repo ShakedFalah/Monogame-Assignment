@@ -13,7 +13,8 @@ namespace MonogameProject.MyEngine.Components
         Pressed
     }
 
-    [RequireComponent(typeof(SpriteRenderer))]
+    [RequireComponent(typeof(SpriteRenderer))] // TODO: Make collider probably
+    // A component that represents a button
     internal class UIButton : Component, Interfaces.IUpdateable, Interfaces.IStartable
     {
         public event Action OnClick;

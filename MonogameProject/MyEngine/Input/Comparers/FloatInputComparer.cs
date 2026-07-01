@@ -3,6 +3,7 @@ using System;
 
 namespace MonogameProject.MyEngine.Input.Comparers
 {
+    // Default comparer for float values input used to define a deadzone
     internal class FloatInputComparer : IInputComparer<float>
     {
         private float _deadzone;

@@ -14,7 +14,7 @@ namespace MonogameProject.MyEngine.Sprites
 
         public TextSprite()
         {
-            font = Engine.Assets.GetFont(AssetsManager.defaultName);
+            font = Engine.Assets.GetFont(Engine.defaultName);
             text = new StringBuilder("");
         }
     }

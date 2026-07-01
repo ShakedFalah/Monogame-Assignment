@@ -1,11 +1,11 @@
 ﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using MonogameProject.MyEngine;
 using MonogameProject.MyEngine.Components;
 using MonogameProject.MyEngine.GameObjects;
+using MonogameProject.MyEngine.Input;
 using MonogameProject.MyEngine.Rendering;
-using MonogameProject.MyEngine.Services;
+using MonogameProject.MyEngine.Sprites;
 
 namespace MonogameProject
 {
@@ -13,40 +13,36 @@ namespace MonogameProject
     {
         public Game1()
         {
-            Engine.Load(this);
+            Engine.CreateInstance(this);
         }
 
         protected override void Initialize()
         {
             Engine.Instance.Initialize(GraphicsDevice);
-            Scene defaultScene = Engine.SceneManager.AddScene("Default");
-            Scene empty = Engine.SceneManager.AddScene("Empty");
-            RenderLayer uiLayer = LayerManager.Instance.CreateLayer("UI", 20);
-            // TODO: Add your initialization logic here
-            GameObject buttonObject = new GameObject(defaultScene);
-            buttonObject.AddComponent<UIButton>();
-            buttonObject.AddComponent<UIText>();
-            SpriteRenderer spriteRenderer = buttonObject.GetComponent<SpriteRenderer>().SetLayer(uiLayer);
-            UIText text = buttonObject.GetComponent<UIText>().SetLayer(uiLayer).SetOrder(1);
-            UIButton button = buttonObject.GetComponent<UIButton>();
-            spriteRenderer.SetSize(new Vector2(50, 50));
-            button.OnClick += setSceneTo;
-            text.SetText("Hello");
 
-            buttonObject.Transform.position = Engine.Instance.GraphicsManager.ScreenCenter;
-
-            Engine.SceneManager.SetScene("Default");
             base.Initialize();
         }
-
-        public void setSceneTo()
-        {
-            Engine.SceneManager.SetScene("Empty");
-        }
-
         protected override void LoadContent()
         {
-            // TODO: use this.Content to load your game content here
+            Scene defaultScene = Engine.SceneManager.GetScene(Engine.defaultName);
+            Scene gameScene = Engine.SceneManager.AddScene("Game");
+            RenderLayer uiLayer = Engine.LayerManager.CreateLayer("UI", 20);
+            RenderLayer backgroundLayer = Engine.LayerManager.CreateLayer("Background", 5);
+            Engine.Assets.SetImage("Player", "Pawn_Run");
+            Engine.Assets.SetImage("Background", "Tilemap_color5");
+            Engine.Assets.SetImage("Building", "Tower");
+            Engine.InputManager.AddAction("Move", new Vector2Binding(Keys.W, Keys.S, Keys.A, Keys.D));
+
+            ObjectGeneration objectGeneration = new ObjectGeneration();
+
+            objectGeneration.StartButton(defaultScene);
+            objectGeneration.SettingsButton(defaultScene);
+            objectGeneration.ExitButton(defaultScene, this);
+            objectGeneration.Player(gameScene);
+            objectGeneration.Building(gameScene);
+            objectGeneration.Background(gameScene);
+
+            Engine.Instance.Load();
         }
 
         protected override void Update(GameTime gameTime)

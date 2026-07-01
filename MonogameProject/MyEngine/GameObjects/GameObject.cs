@@ -2,10 +2,10 @@
 using MonogameProject.MyEngine.Components;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace MonogameProject.MyEngine.GameObjects
 {
+    // The basic game object to represent everything inside a scene and contain components
     internal class GameObject
     {
         public Scene Scene { get; }

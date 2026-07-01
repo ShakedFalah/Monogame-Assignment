@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MonogameProject.MyEngine.Rendering
+﻿namespace MonogameProject.MyEngine.Rendering
 {
+    // A class that represents a render layer
     internal sealed class RenderLayer
     {
         public string Name { get; }

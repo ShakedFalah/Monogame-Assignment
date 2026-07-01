@@ -55,9 +55,9 @@ namespace MonogameProject.MyEngine.Services
             }
         }
 
-        public T GetAction<T>(string name)
+        public InputAction<T> GetAction<T>(string name)
         {
-            return GetMap<T>().GetValue(name, _state);
+            return GetMap<T>().GetAction(name);
         }
     }
 }

@@ -2,6 +2,7 @@
 
 namespace MonogameProject.MyEngine.Rendering
 {
+    // A base class for all sprites and renderable objects with a pivot point
     internal abstract class PivotObject
     {
         public Pivot SpritePivot { get; private set; } = new Pivot();

@@ -39,6 +39,8 @@ namespace MonogameProject.MyEngine.Rendering
             this.pivotType = pivotType;
         }
     }
+
+    // A static class to convert between pivot types
     internal static class PivotHelper
     {
         public static Dictionary<PivotPosition, Func<Pivot>> originByPosition = new Dictionary<PivotPosition, Func<Pivot>> { 

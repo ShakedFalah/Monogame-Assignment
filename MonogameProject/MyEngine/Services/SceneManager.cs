@@ -9,12 +9,18 @@ namespace MonogameProject.MyEngine.Services
     internal class SceneManager : ISystem
     {
         public Scene ActiveScene { get; private set; }
+        public string DefaultScene { get; private set; } = Engine.defaultName;
         private Dictionary<string, Scene> _scenes;
         private GraphicsDevice _graphicsDevice;
         public SceneManager(GraphicsDevice graphicsDevice) 
         {
             _graphicsDevice = graphicsDevice;
             _scenes = new Dictionary<string, Scene>();
+        }
+
+        public void Initialize()
+        {
+            ActiveScene = AddScene(Engine.defaultName);
         }
 
         public void Update(GameTime gameTime)
@@ -67,6 +73,11 @@ namespace MonogameProject.MyEngine.Services
                 throw new KeyNotFoundException($"Scene '{sceneName}' was not found.");
             }
 
+        }
+
+        public void SetDefaultScene(string name)
+        {
+            DefaultScene = name;
         }
     }
 }

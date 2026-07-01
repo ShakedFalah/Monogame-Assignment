@@ -7,6 +7,7 @@ using System.Text;
 
 namespace MonogameProject.MyEngine.Components
 {
+    // A component to render text on screen
     internal class UIText : Component, IRenderable
     {
         public Color color = Color.Black;
@@ -17,7 +18,7 @@ namespace MonogameProject.MyEngine.Components
 
         public UIText() : base()
         {
-            SetLayer(LayerManager.Instance.Get("Default"));
+            SetLayer(Engine.LayerManager.GetLayer("Default"));
             textSprite = new TextSprite();
         }
 

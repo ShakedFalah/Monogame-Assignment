@@ -1,26 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.ComponentModel.Design;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MonogameProject.MyEngine.Rendering
 {
+    // A singleton that creates and keeps layers
     internal class LayerManager
     {
-        public static LayerManager Instance { get; private set; }
         private readonly Dictionary<string, RenderLayer> _layers = new();
-        private LayerManager()
+        public LayerManager()
+        {
+            
+        }
+
+        public void Initialize()
         {
             CreateLayer("Default", 10);
         }
-        public static void Initialize()
-        {
-            if (Instance == null)
-            {
-                Instance = new LayerManager();
-            }
-        }
+
         public RenderLayer CreateLayer(string name, int order)
         {
             if (_layers.ContainsKey(name))
@@ -33,7 +30,7 @@ namespace MonogameProject.MyEngine.Rendering
             return layer;
         }
 
-        public RenderLayer Get(string name)
+        public RenderLayer GetLayer(string name)
         {
             return _layers[name];
         }

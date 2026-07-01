@@ -5,6 +5,7 @@ using MonogameProject.MyEngine.Sprites;
 
 namespace MonogameProject.MyEngine.Components
 {
+    // Component that is used to render sprites on screen
     internal class SpriteRenderer : Component, Interfaces.IRenderable
     {
         public Sprite sprite = null;
@@ -17,7 +18,7 @@ namespace MonogameProject.MyEngine.Components
 
         public SpriteRenderer() : base()
         {
-            SetLayer(LayerManager.Instance.Get("Default"));
+            SetLayer(Engine.LayerManager.GetLayer("Default"));
         }
 
         public RenderLayer Layer()
@@ -51,14 +52,14 @@ namespace MonogameProject.MyEngine.Components
                 return;
             }
 
+            Rectangle destinationRectangle = new Rectangle(gameObject.Transform.position.ToPoint(), (size * gameObject.Transform.scale).ToPoint());
             spriteBatch.Draw(
                 sprite.Texture(),
-                gameObject.Transform.position,
+                destinationRectangle,
                 sprite.SourceRectangle,
                 tint,
                 gameObject.Transform.rotation,
                 sprite.AbsolutePivot,
-                size * gameObject.Transform.scale,
                 effects,
                 0f);
         }

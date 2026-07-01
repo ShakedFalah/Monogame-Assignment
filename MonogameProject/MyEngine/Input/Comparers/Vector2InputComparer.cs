@@ -4,6 +4,7 @@ using System;
 
 namespace MonogameProject.MyEngine.Input.Comparers
 {
+    // Default comparer for Vector2 values input used to define a deadzone
     internal class Vector2InputComparer : IInputComparer<Vector2>
     {
         private float _deadzone;

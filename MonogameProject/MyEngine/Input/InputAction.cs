@@ -1,10 +1,10 @@
 ﻿using MonogameProject.MyEngine.Interfaces;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 
 namespace MonogameProject.MyEngine.Input
 {
+    // A class connected to an inputbinding that fires event on the binding and reads its value
     internal class InputAction<T>
     {
         public event Action<T>? Started;

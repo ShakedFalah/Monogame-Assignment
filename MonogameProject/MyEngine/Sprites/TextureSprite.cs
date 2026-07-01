@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace MonogameProject.MyEngine.Sprites
 {
@@ -11,9 +12,12 @@ namespace MonogameProject.MyEngine.Sprites
             return _texture;
         }
 
+        public override Vector2 Size => SourceRectangle.Size.ToVector2();
+
         public void SetTexture(Texture2D texture)
         {
             this._texture = texture;
+            SetSourceRectangle(texture.Bounds);
         }
     }
 }

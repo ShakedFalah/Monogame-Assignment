@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 namespace MonogameProject.MyEngine.Input
 {
+    // A generic class to contain all input actions of a specific type and calls update on them
     internal class InputActionMap<T> : IActionMap
     {
         private readonly Dictionary<string, InputAction<T>> _actions = new();
@@ -14,7 +15,7 @@ namespace MonogameProject.MyEngine.Input
             return newAction;
         }
 
-        public InputAction<T> GetAction(string name, InputState state)
+        public InputAction<T> GetAction(string name)
         {
             return _actions[name];
         }

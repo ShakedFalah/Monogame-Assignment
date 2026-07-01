@@ -2,6 +2,7 @@
 
 namespace MonogameProject.MyEngine.Components
 {
+    // Base component class used to make components
     internal abstract class Component
     {
         public GameObject gameObject;
