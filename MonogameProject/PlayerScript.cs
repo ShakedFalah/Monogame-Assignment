@@ -1,7 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
+using MonogameProject.MyEngine;
 using MonogameProject.MyEngine.Components;
 
-namespace MonogameProject.MyEngine
+namespace MonogameProject
 {
     internal class PlayerScript : Script
     {

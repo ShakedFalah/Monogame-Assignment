@@ -7,11 +7,15 @@ namespace MonogameProject.MyEngine.Input
     {
         private KeyboardState _currentKeyboard;
         private KeyboardState _previousKeyboard;
+        private GamePadState _currentGamePadState;
+        private GamePadState _previousGamePadState;
 
         internal void Update()
         {
             _previousKeyboard = _currentKeyboard;
             _currentKeyboard = Keyboard.GetState();
+            _previousGamePadState = _currentGamePadState;
+            _currentGamePadState = GamePad.GetState(0);
         }
 
         public bool IsKeyDown(Keys key)
