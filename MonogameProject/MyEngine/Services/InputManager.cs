@@ -1,6 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
 using MonogameProject.MyEngine.Input;
-using MonogameProject.MyEngine.Input.Comparers;
 using MonogameProject.MyEngine.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -11,6 +10,7 @@ namespace MonogameProject.MyEngine.Services
     {
         private readonly InputState _state = new();
         private Dictionary<Type, IActionMap> _actionMaps = new();
+        private Dictionary<Type, object> _provider = new();
 
         public InputManager() 
         {
@@ -42,17 +42,22 @@ namespace MonogameProject.MyEngine.Services
             return (InputActionMap<T>)map;
         }
 
-        public void AddAction<T>(string name, IInputBinding<T> binding, float deadzone = 0.1f)
+        public void AddAction<T>(string name, IInputBinding<T> binding, IInputComparer<T> comparer = null)
         {
             InputAction<T> action = GetMap<T>().Add(name, binding);
 
-            if (typeof(T) == typeof(float))
+            if (comparer != null)
             {
-                action.Comparer = (IInputComparer<T>)(new FloatInputComparer(deadzone));
-            } else if (typeof(T) == typeof(Vector2))
+                action.Comparer = comparer;
+            } else if (_provider.TryGetValue(typeof(T), out var provider))
             {
-                action.Comparer = (IInputComparer<T>)(new Vector2InputComparer(deadzone));
+                action.Comparer = ((IInputComparerProvider<T>)provider).createInputComparer();
             }
+        }
+
+        public void SetInputComparerProvider<T>(IInputComparerProvider<T> provider)
+        {
+            _provider[typeof(T)] =  provider;
         }
 
         public InputAction<T> GetAction<T>(string name)
