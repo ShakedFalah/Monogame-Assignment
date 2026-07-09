@@ -21,7 +21,7 @@ namespace MonogameProject.MyEngine.Services
             game.IsMouseVisible = true;
 
             ApplyResolution(DEFAULTWIDTH, DEFAULTHEIGHT);
-            SetFullScreen(true);
+            SetFullScreen(false);
         }
 
         public void Initialize(GraphicsDevice graphicsDevice)

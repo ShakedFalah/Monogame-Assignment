@@ -1,6 +1,7 @@
 ﻿using MonogameProject.MyEngine.Attributes;
 using MonogameProject.MyEngine.Interfaces;
 using MonogameProject.MyEngine.Rendering;
+using System;
 
 namespace MonogameProject.MyEngine.Components
 {
@@ -20,19 +21,21 @@ namespace MonogameProject.MyEngine.Components
 
         public void Update(Microsoft.Xna.Framework.GameTime gameTime)
         {
-            _timeBetweenFrames = 1f / _clip.frameRate;
+            _timeBetweenFrames = _clip.GetDuration();
+            _timeTillNextFrame = MathF.Min(_timeTillNextFrame, _timeBetweenFrames);
             _timeTillNextFrame -= (float)gameTime.ElapsedGameTime.TotalSeconds;
 
             if (_timeTillNextFrame < 0f)
             {
                 _timeTillNextFrame = _timeBetweenFrames;
-                _spriteRenderer.sprite = _clip.next();
+                _spriteRenderer.sprite = _clip.Next();
             }
         }
 
         public void SetClip(AnimationClip clip)
         {
             _clip = clip;
+            _clip.Reset();
         }
     }
 }

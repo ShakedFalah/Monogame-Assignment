@@ -6,50 +6,37 @@ namespace MonogameProject.MyEngine.Rendering
 {
     internal class AnimationClip : IEnumerable<AnimationFrame>
     {
-        private List<AnimationFrame> _frames = new();
+        public List<AnimationFrame> frames = new();
         private int _currentFrame = 0;
         public int frameRate { get; } = 60;
         private bool _isLooping = false;
 
-        public IEnumerator<AnimationFrame> GetEnumerator()
+        public AnimationClip(bool looping = false, int frameRate = 60)
         {
-            return _frames.GetEnumerator();
+            this._isLooping = looping;
+            this.frameRate = frameRate;
         }
 
-        public Sprite next()
+        public IEnumerator<AnimationFrame> GetEnumerator()
+        {
+            return frames.GetEnumerator();
+        }
+
+        public Sprite Next()
         {
             _currentFrame++;
-            if (_currentFrame >= _frames.Count)
+            if (_currentFrame >= frames.Count)
             {
                 if (_isLooping)
                 {
                     _currentFrame = 0;
                 } else
                 {
-                    _currentFrame = _frames.Count - 1;
+                    _currentFrame = frames.Count - 1;
                 }
             }
 
-            return _frames[_currentFrame].getSprite();
-        }
-
-        public Sprite prev()
-        {
-            _currentFrame--;
-
-            if (_currentFrame < 0)
-            {
-                if (_isLooping)
-                {
-                    _currentFrame = _frames.Count - 1;
-                }
-                else
-                {
-                    _currentFrame = 0;
-                }
-            }
-
-            return _frames[_currentFrame].getSprite();
+            return frames[_currentFrame].getSprite();
         }
 
         public void Reset()
@@ -66,8 +53,18 @@ namespace MonogameProject.MyEngine.Rendering
         {
             get
             {
-                return _frames[index].getSprite();
+                return frames[index].getSprite();
             }
+        }
+
+        public float GetDuration()
+        {
+            if (frames[_currentFrame].duration > 0f)
+            {
+                return frames[_currentFrame].duration;
+            }
+
+            return 1f / frameRate;
         }
     }
 }

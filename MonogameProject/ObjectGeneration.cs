@@ -5,6 +5,7 @@ using MonogameProject.MyEngine.GameObjects;
 using MonogameProject.MyEngine.Rendering;
 using MonogameProject.MyEngine.Sprites;
 using System;
+using System.Collections.Generic;
 
 namespace MonogameProject
 {
@@ -61,12 +62,20 @@ namespace MonogameProject
         {
             GameObject player = new GameObject(scene);
             player.Transform.position = Engine.Instance.GraphicsManager.ScreenCenter;
-            SpriteSheet playerSpriteSheet = new SpriteSheet(Engine.Assets.GetImage("Player"), 5);
+            SpriteSheet playerSpriteSheet = new SpriteSheet(Engine.Assets.GetImage("Player"), 6);
             SpritesheetSprite sprite = new SpritesheetSprite(playerSpriteSheet);
             SpriteRenderer playerRenderer = player.AddComponent<SpriteRenderer>();
             playerRenderer.sprite = sprite;
             playerRenderer.SetSize(new Vector2(500, 500));
             player.AddComponent<PlayerScript>();
+            Animator playerAnimator = player.AddComponent<Animator>();
+            AnimationClip clip = new AnimationClip(true, 8);
+            foreach (var animationSprite in sprite.SplitToSprites())
+            {
+                clip.frames.Add(new AnimationFrame(animationSprite));
+            }
+
+            playerAnimator.SetClip(clip);
         }
         
         public void Background(Scene scene)
