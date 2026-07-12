@@ -7,10 +7,10 @@ namespace MonogameProject.MyEngine.Input
     // A class connected to an inputbinding that fires event on the binding and reads its value
     internal class InputAction<T>
     {
-        public event Action<T>? Started;
-        public event Action<T>? Performed;
-        public event Action<T>? Canceled;
-        public event Action<T>? Changed;
+        public event Action<T> Started;
+        public event Action<T> Performed;
+        public event Action<T> Canceled;
+        public event Action<T> Changed;
 
         public IInputBinding<T> Binding;
         public IInputComparer<T>? Comparer; // optional

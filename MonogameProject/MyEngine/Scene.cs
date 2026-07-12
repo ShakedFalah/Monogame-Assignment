@@ -8,11 +8,13 @@ namespace MonogameProject.MyEngine
     {
         public LifecycleSystem Lifecycle { get; }
         public RenderSystem Renderer { get; }
+        public PhysicsSystem Physics { get; }
 
         public Scene(GraphicsDevice graphicsDevice)
         {
             this.Lifecycle = new();
             this.Renderer = new(graphicsDevice);
+            this.Physics = new();
         }
 
         public void Start()
@@ -23,6 +25,7 @@ namespace MonogameProject.MyEngine
         public void Update(GameTime gameTime)
         {
             Lifecycle.Update(gameTime);
+            Physics.Update(gameTime);
         }
 
         public void Draw(GameTime gameTime)
@@ -32,12 +35,14 @@ namespace MonogameProject.MyEngine
 
         public void RegisterAll(object obj)
         {
+            Physics.Register(obj);
             Lifecycle.Register(obj);
             Renderer.Register(obj);
         }
 
         public void UnregisterAll(object obj)
         {
+            Physics.Unregister(obj);
             Lifecycle.Unregister(obj);
             Renderer.Unregister(obj);
         }

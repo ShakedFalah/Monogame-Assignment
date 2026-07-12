@@ -23,7 +23,7 @@ namespace MonogameProject
             spriteRenderer.SetSize(new Vector2(200, 80));
             button.OnClick += SetSceneToGame;
             text.SetText("Start");
-            buttonObject.Transform.position = Engine.Instance.GraphicsManager.ScreenCenter + new Vector2(0, -200);
+            buttonObject.Transform.position = Engine.GraphicsManager.ScreenCenter + new Vector2(0, -200);
         }
 
         public void SettingsButton(Scene scene)
@@ -38,7 +38,7 @@ namespace MonogameProject
             spriteRenderer.SetSize(new Vector2(200, 80));
             button.OnClick += Settings;
             text.SetText("Settings");
-            buttonObject.Transform.position = Engine.Instance.GraphicsManager.ScreenCenter;
+            buttonObject.Transform.position = Engine.GraphicsManager.ScreenCenter;
         }
 
         public void ExitButton(Scene scene, Game game)
@@ -53,7 +53,7 @@ namespace MonogameProject
             spriteRenderer.SetSize(new Vector2(200, 80));
             button.OnClick += game.Exit;
             text.SetText("Exit");
-            buttonObject.Transform.position = Engine.Instance.GraphicsManager.ScreenCenter + new Vector2(0, 200);
+            buttonObject.Transform.position = Engine.GraphicsManager.ScreenCenter + new Vector2(0, 200);
         }
 
 
@@ -61,7 +61,7 @@ namespace MonogameProject
         public void Player(Scene scene)
         {
             GameObject player = new GameObject(scene);
-            player.Transform.position = Engine.Instance.GraphicsManager.ScreenCenter;
+            player.Transform.position = Engine.GraphicsManager.ScreenCenter;
             SpriteSheet playerSpriteSheet = new SpriteSheet(Engine.Assets.GetImage("Player"), 6);
             SpritesheetSprite sprite = new SpritesheetSprite(playerSpriteSheet);
             SpriteRenderer playerRenderer = player.AddComponent<SpriteRenderer>();
@@ -81,7 +81,7 @@ namespace MonogameProject
         public void Background(Scene scene)
         {
             GameObject background = new GameObject(scene);
-            background.Transform.position = Engine.Instance.GraphicsManager.ScreenCenter;
+            background.Transform.position = Engine.GraphicsManager.ScreenCenter;
             SpriteRenderer backgroundRenderer = background.AddComponent<SpriteRenderer>().SetLayer(Engine.LayerManager.GetLayer("Background"));
             backgroundRenderer.SetSize(new Vector2(1000, 1000));
             SpriteSheet backgroundSheet = new SpriteSheet(Engine.Assets.GetImage("Background"), 9, 6);
@@ -92,7 +92,7 @@ namespace MonogameProject
         public void Building(Scene scene)
         {
             GameObject building = new GameObject(scene);
-            building.Transform.position = Engine.Instance.GraphicsManager.ScreenCenter + new Vector2(100, 0);
+            building.Transform.position = Engine.GraphicsManager.ScreenCenter + new Vector2(100, 0);
             SpriteRenderer buildingRenderer = building.AddComponent<SpriteRenderer>().SetLayer(Engine.LayerManager.GetLayer("Background")).SetOrder(1);
             TextureSprite buildingSprite = new TextureSprite();
             buildingSprite.SetTexture(Engine.Assets.GetImage("Building"));

@@ -11,7 +11,7 @@ namespace MonogameProject.MyEngine
         public static Engine Instance { get; private set; }
 
         public static readonly string defaultName = "Default";
-        public GraphicsManager GraphicsManager { get; private set; }
+        public static GraphicsManager GraphicsManager { get; private set; }
         public static AssetsManager Assets { get; private set; }
         public static SceneManager SceneManager { get; private set; }
         public static InputManager InputManager { get; private set; }
@@ -43,6 +43,7 @@ namespace MonogameProject.MyEngine
         public void Initialize(GraphicsDevice graphicsDevice)
         {
             GraphicsManager.Initialize(graphicsDevice);
+            Assets.Initialize();
             LayerManager.Initialize();
             SceneManager.Initialize();
         }

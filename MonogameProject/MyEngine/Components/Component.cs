@@ -7,8 +7,12 @@ namespace MonogameProject.MyEngine.Components
     {
         public GameObject gameObject;
 
+        private static int _nextId = 1;
+        public int Id { get; }
+
         public Component()
         {
+            Id = _nextId++;
         }
 
         public void Initialize(GameObject gameObject)

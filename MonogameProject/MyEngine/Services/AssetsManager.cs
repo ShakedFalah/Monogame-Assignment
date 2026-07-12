@@ -16,7 +16,11 @@ namespace MonogameProject.MyEngine.Services
         public AssetsManager(ContentManager content)
         {
             _content = content;
-            SetFont(Engine.defaultName,"Arial");
+        }
+
+        public void Initialize()
+        {
+            SetFont(Engine.defaultName, "Arial");
         }
 
         public void SetFont(string name, string fileName)

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace MonogameProject.MyEngine.Systems
 {
-    internal class LifecycleSystem : ISystem, Interfaces.IObservable<object>
+    internal class LifecycleSystem : ISystem, Interfaces.IRegisterable<object>
     {
         private HashSet<Interfaces.IStartable> _startables = [];
         private HashSet<Interfaces.IUpdateable> _updateables = [];
@@ -32,27 +32,27 @@ namespace MonogameProject.MyEngine.Systems
                 return;
             }
 
-            if (subscriber is IStartable)
+            if (subscriber is IStartable startable)
             {
-                _startables.Add((IStartable)subscriber);
+                _startables.Add(startable);
             }
 
-            if (subscriber is Interfaces.IUpdateable)
+            if (subscriber is Interfaces.IUpdateable updateable)
             {
-                _updateables.Add((Interfaces.IUpdateable)subscriber);
+                _updateables.Add(updateable);
             }
         }
 
         public void Unregister(object subscriber)
         {
-            if (subscriber is IStartable)
+            if (subscriber is IStartable startable)
             {
-                _startables.Remove((IStartable)subscriber);
+                _startables.Remove(startable);
             }
 
-            if (subscriber is Interfaces.IUpdateable)
+            if (subscriber is Interfaces.IUpdateable updateable)
             {
-                _updateables.Remove((Interfaces.IUpdateable)subscriber);
+                _updateables.Remove(updateable);
             }
         }
     }

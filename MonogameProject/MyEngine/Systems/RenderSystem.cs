@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace MonogameProject.MyEngine.Systems
 {
-    internal class RenderSystem : ISystem, Interfaces.IObservable<object>
+    internal class RenderSystem : ISystem, Interfaces.IRegisterable<object>
     {
         private GraphicsDevice _graphicsDevice;
         private HashSet<Interfaces.IRenderable> _renderables;
@@ -35,17 +35,17 @@ namespace MonogameProject.MyEngine.Systems
 
         public void Register(object subscriber)
         {
-            if (subscriber is Interfaces.IRenderable)
+            if (subscriber is Interfaces.IRenderable renderable)
             {
-                _renderables.Add((Interfaces.IRenderable)subscriber);
+                _renderables.Add(renderable);
             }
         }
 
         public void Unregister(object subscriber)
         {
-            if (subscriber is Interfaces.IRenderable)
+            if (subscriber is Interfaces.IRenderable renderable)
             {
-                _renderables.Remove((Interfaces.IRenderable)subscriber);
+                _renderables.Remove(renderable);
             }
         }
     }
