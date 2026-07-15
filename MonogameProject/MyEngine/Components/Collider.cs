@@ -23,7 +23,7 @@ namespace MonogameProject.MyEngine.Components
         {
             base.Initialize(parent);
 
-            gameObject.Transform.onTransformChange += (transform) => UpdateCollider();
+            gameObject.Transform.OnTransformChange += (transform) => UpdateCollider();
             UpdateCollider();
         }
         public void UpdateCollider()

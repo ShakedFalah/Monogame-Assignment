@@ -6,9 +6,9 @@ namespace MonogameProject.MyEngine.Components
     // A component required by every game object to define its position rotation and scale
     internal class Transform : Component
     {
-        private Vector2 _position;
-        private float _rotation;
-        private Vector2 _scale;
+        private Vector2 _position = Vector2.Zero;
+        private float _rotation = 0f;
+        private Vector2 _scale = Vector2.Zero;
         public Vector2 Position { 
             get 
             { 
@@ -17,7 +17,7 @@ namespace MonogameProject.MyEngine.Components
             set 
             { 
                 _position = value;
-                onTransformChange?.Invoke(this);
+                OnTransformChange?.Invoke(this);
             } 
         }
         public float Rotation
@@ -29,7 +29,7 @@ namespace MonogameProject.MyEngine.Components
             set
             {
                 _rotation = value;
-                onTransformChange?.Invoke(this);
+                OnTransformChange?.Invoke(this);
             }
         }
         public Vector2 Scale
@@ -41,10 +41,10 @@ namespace MonogameProject.MyEngine.Components
             set
             {
                 _scale = value;
-                onTransformChange?.Invoke(this);
+                OnTransformChange?.Invoke(this);
             }
         }
 
-        public event Action<Transform> onTransformChange;
+        public event Action<Transform> OnTransformChange;
     }
 }
