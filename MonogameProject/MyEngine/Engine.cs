@@ -16,6 +16,9 @@ namespace MonogameProject.MyEngine
         public static SceneManager SceneManager { get; private set; }
         public static InputManager InputManager { get; private set; }
         public static LayerManager LayerManager { get; private set; }
+        private float _accumulator = 0f;
+        private const float FixedDeltaTime = 1f / 60f;
+
         private Engine(Game game)
         {
             game.Content.RootDirectory = "Content";
@@ -53,13 +56,24 @@ namespace MonogameProject.MyEngine
             SceneManager.SetScene(SceneManager.DefaultScene);
         }
 
-        public static void Update(GameTime gameTime)
+        public void Update(GameTime gameTime)
         {
+            float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
+
             InputManager.Update(gameTime);
+
             SceneManager.Update(gameTime);
+
+            _accumulator += deltaTime;
+
+            while (_accumulator >= FixedDeltaTime)
+            {
+                SceneManager.FixedUpdate(FixedDeltaTime);
+                _accumulator -= FixedDeltaTime;
+            }
         }
 
-        public static void Draw(GameTime gameTime)
+        public void Draw(GameTime gameTime)
         {
             SceneManager.Draw(gameTime);
         }

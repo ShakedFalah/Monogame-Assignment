@@ -12,14 +12,14 @@ namespace MonogameProject.MyEngine.Components
     {
         public Color color = Color.Black;
         public SpriteEffects spriteEffects;
-        TextSprite textSprite;
-        RenderLayer _layer;
-        int _orderInLayer;
+        private TextSprite _textSprite;
+        private RenderLayer _layer;
+        private int _orderInLayer;
 
         public UIText() : base()
         {
             SetLayer(Engine.LayerManager.GetLayer("Default"));
-            textSprite = new TextSprite();
+            _textSprite = new TextSprite();
         }
 
         public RenderLayer Layer()
@@ -35,7 +35,7 @@ namespace MonogameProject.MyEngine.Components
         public void Render(SpriteBatch spriteBatch)
         {
             Transform transform = gameObject.Transform;
-            spriteBatch.DrawString(textSprite.font, textSprite.text, transform.position, color, transform.rotation, textSprite.AbsolutePivot, transform.scale, spriteEffects, 0);
+            spriteBatch.DrawString(_textSprite.font, _textSprite.text, transform.position, color, transform.rotation, _textSprite.AbsolutePivot, transform.scale, spriteEffects, 0);
         }
 
         public UIText SetLayer(RenderLayer layer)
@@ -51,12 +51,12 @@ namespace MonogameProject.MyEngine.Components
 
         public void SetText(string text)
         {
-            textSprite.text = new StringBuilder(text);
+            _textSprite.text = new StringBuilder(text);
         }
 
         public void SetFont(SpriteFont font)
         {
-            textSprite.font = font;
+            _textSprite.font = font;
         }
     }
 }

@@ -13,7 +13,7 @@ namespace MonogameProject.MyEngine.Input
         public event Action<T> Changed;
 
         public IInputBinding<T> Binding;
-        public IInputComparer<T>? Comparer; // optional
+        public IInputComparer<T> Comparer; // optional
 
         private T _previous;
         private T _current;
@@ -22,7 +22,7 @@ namespace MonogameProject.MyEngine.Input
 
         public InputAction(IInputBinding<T> binding)
         {
-            this.Binding = binding;
+            Binding = binding;
         }
 
         public void Update(InputState state)

@@ -51,7 +51,7 @@ namespace MonogameProject
                 Exit();
 
             // TODO: Add your update logic here
-            Engine.Update(gameTime);
+            Engine.Instance.Update(gameTime);
 
             base.Update(gameTime);
         }
@@ -60,7 +60,7 @@ namespace MonogameProject
         {
             // TODO: Add your drawing code here
 
-            Engine.Draw(gameTime);
+            Engine.Instance.Draw(gameTime);
 
             base.Draw(gameTime);
         }

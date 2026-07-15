@@ -25,7 +25,12 @@ namespace MonogameProject.MyEngine
         public void Update(GameTime gameTime)
         {
             Lifecycle.Update(gameTime);
-            Physics.Update(gameTime);
+        }
+
+        public void FixedUpdate(float deltaTiem)
+        {
+            Lifecycle.FixedUpdate(deltaTiem);
+            Physics.FixedUpdate(deltaTiem);
         }
 
         public void Draw(GameTime gameTime)

@@ -4,10 +4,11 @@ using System.Collections.Generic;
 
 namespace MonogameProject.MyEngine.Systems
 {
-    internal class LifecycleSystem : ISystem, Interfaces.IRegisterable<object>
+    internal class LifecycleSystem : IUpdateSystem, IFixedUpdateSystem, Interfaces.IRegisterable<object>
     {
-        private HashSet<Interfaces.IStartable> _startables = [];
-        private HashSet<Interfaces.IUpdateable> _updateables = [];
+        private readonly HashSet<Interfaces.IStartable> _startables = [];
+        private readonly HashSet<Interfaces.IUpdateable> _updateables = [];
+        private readonly HashSet<Interfaces.IFixedUpdateable> _fixedUpdateables = [];
 
         public void Start()
         {
@@ -22,6 +23,14 @@ namespace MonogameProject.MyEngine.Systems
             foreach (var updateable in _updateables)
             {
                 updateable.Update(gameTime);
+            }
+        }
+
+        public void FixedUpdate(float deltaTime)
+        {
+            foreach (var fixedUpdateable in _fixedUpdateables)
+            {
+                fixedUpdateable.FixedUpdate(deltaTime);
             }
         }
 
@@ -41,6 +50,11 @@ namespace MonogameProject.MyEngine.Systems
             {
                 _updateables.Add(updateable);
             }
+
+            if (subscriber is Interfaces.IFixedUpdateable fixedUpdateable)
+            {
+                _fixedUpdateables.Add(fixedUpdateable);
+            }
         }
 
         public void Unregister(object subscriber)
@@ -54,6 +68,12 @@ namespace MonogameProject.MyEngine.Systems
             {
                 _updateables.Remove(updateable);
             }
+
+            if (subscriber is Interfaces.IFixedUpdateable fixedUpdateable)
+            {
+                _fixedUpdateables.Remove(fixedUpdateable);
+            }
         }
+
     }
 }

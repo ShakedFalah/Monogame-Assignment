@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace MonogameProject.MyEngine.Services
 {
-    internal class InputManager : ISystem
+    internal class InputManager : IUpdateSystem
     {
         private readonly InputState _state = new();
         private Dictionary<Type, IActionMap> _actionMaps = new();

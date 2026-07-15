@@ -6,12 +6,33 @@ using System.Collections.Generic;
 
 namespace MonogameProject.MyEngine.Systems
 {
-    internal class PhysicsSystem : ISystem, Interfaces.IRegisterable<object>
+    internal class PhysicsSystem : IFixedUpdateSystem, Interfaces.IRegisterable<object>
     {
         private readonly List<Collider> _colliders = new();
+        private readonly List<Rigidbody> _rigidbodies = new();
         private Dictionary<CollisionPair, bool> _previous = new();
+        public Vector2 Gravity { get; set; } = new Vector2(0, 980);
 
-        public void Update(GameTime gameTime)
+        public void FixedUpdate(float deltaTime)
+        {
+            ApplyGravity(deltaTime);
+            ResolveCollisions();
+        }
+
+        private void ApplyGravity(float deltaTime)
+        {
+            foreach (Rigidbody body in _rigidbodies)
+            {
+                body.Velocity += Gravity * body.GravityScale * deltaTime;
+            }
+        }
+
+        private void MoveRigidBodies(float deltaTime)
+        {
+            
+        }
+
+        private void ResolveCollisions()
         {
             Dictionary<CollisionPair, bool> current = new();
 
@@ -22,7 +43,7 @@ namespace MonogameProject.MyEngine.Systems
                     Collider first = _colliders[i];
                     Collider second = _colliders[j];
 
-                    CollisionPair pair = new CollisionPair(first, second);
+                    CollisionPair pair = new(first, second);
 
                     if (first.CheckCollision(second))
                     {
@@ -86,6 +107,10 @@ namespace MonogameProject.MyEngine.Systems
             {
                 _colliders.Add(collider);
             }
+            if (subscriber is Rigidbody rigidbody && !_rigidbodies.Contains(rigidbody))
+            {
+                _rigidbodies.Add(rigidbody);
+            }
         }
 
         public void Unregister(object subscriber)
@@ -93,6 +118,10 @@ namespace MonogameProject.MyEngine.Systems
             if (subscriber is Collider collider)
             {
                 _colliders.Remove(collider);
+            }
+            if (subscriber is Rigidbody rigidbody)
+            {
+                _rigidbodies.Remove(rigidbody);
             }
         }
     }

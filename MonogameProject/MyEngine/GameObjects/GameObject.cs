@@ -11,7 +11,7 @@ namespace MonogameProject.MyEngine.GameObjects
         public Scene Scene { get; }
         public Transform Transform { get; }
         private readonly Dictionary<Type, Component> _components = [];
-        private readonly HashSet<Type> _constructing = new();
+        private readonly HashSet<Type> _constructing = [];
         internal GameObject(Scene scene)
         {
             this.Scene = scene;
@@ -51,17 +51,17 @@ namespace MonogameProject.MyEngine.GameObjects
 
         public void RemoveComponent(Type type)
         {
-            if (!(_components.ContainsKey(type)))
+            if (!(_components.TryGetValue(type, out Component component)))
             {
                 throw new Exception($"Tried to remove component {type}, but it doesn't exist");
             }
-            Component component = _components[type];
+
             _components.Remove(type);
-            Scene.UnregisterAll(type);
+            Scene.UnregisterAll(component);
         }
 
 
-        public Component? GetComponent(Type type)
+        public Component GetComponent(Type type)
         {
             if (_components.TryGetValue(type, out var component))
             {
@@ -86,7 +86,7 @@ namespace MonogameProject.MyEngine.GameObjects
             RemoveComponent(typeof(T));
         }
 
-        public T? GetComponent<T>() where T : Component
+        public T GetComponent<T>() where T : Component
         {
             return (T)GetComponent(typeof(T));
         }

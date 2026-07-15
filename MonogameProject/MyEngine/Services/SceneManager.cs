@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace MonogameProject.MyEngine.Services
 {
-    internal class SceneManager : ISystem
+    internal class SceneManager : IUpdateSystem, IFixedUpdateSystem
     {
         public Scene ActiveScene { get; private set; }
         public string DefaultScene { get; private set; } = Engine.defaultName;
@@ -26,6 +26,11 @@ namespace MonogameProject.MyEngine.Services
         public void Update(GameTime gameTime)
         {
             ActiveScene.Update(gameTime);
+        }
+
+        public void FixedUpdate(float deltaTime)
+        {
+            ActiveScene.FixedUpdate(deltaTime);
         }
 
         public void Draw(GameTime gameTime)

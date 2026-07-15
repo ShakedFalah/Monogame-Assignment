@@ -2,8 +2,8 @@
 
 namespace MonogameProject.MyEngine.Interfaces
 {
-    internal interface ISystem
+    internal interface IFixedUpdateable
     {
-        public void Update(GameTime gameTime);
+        public void FixedUpdate(float deltaTime);
     }
 }

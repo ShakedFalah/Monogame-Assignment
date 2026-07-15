@@ -7,10 +7,10 @@ using System.Linq;
 
 namespace MonogameProject.MyEngine.Systems
 {
-    internal class RenderSystem : ISystem, Interfaces.IRegisterable<object>
+    internal class RenderSystem : IUpdateSystem, Interfaces.IRegisterable<object>
     {
         private GraphicsDevice _graphicsDevice;
-        private HashSet<Interfaces.IRenderable> _renderables;
+        private readonly HashSet<Interfaces.IRenderable> _renderables;
         private readonly SpriteBatch _spriteBatch;
 
         public RenderSystem(GraphicsDevice graphicsDevice)

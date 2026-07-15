@@ -6,7 +6,7 @@ using System;
 namespace MonogameProject.MyEngine.Components
 {
     [RequireComponent(typeof(SpriteRenderer))]
-    internal class Animator : Component, IUpdateable, IStartable
+    internal class Animator : Component, IUpdateable, IStartable //TODO: add a state machine
     {
         private AnimationClip _clip;
         private SpriteRenderer _spriteRenderer;
