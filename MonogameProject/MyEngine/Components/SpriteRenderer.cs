@@ -52,13 +52,13 @@ namespace MonogameProject.MyEngine.Components
                 return;
             }
 
-            Rectangle destinationRectangle = new Rectangle(gameObject.Transform.position.ToPoint(), (size * gameObject.Transform.scale).ToPoint());
+            Rectangle destinationRectangle = new Rectangle(gameObject.Transform.Position.ToPoint(), (size * gameObject.Transform.Scale).ToPoint());
             spriteBatch.Draw(
                 sprite.Texture(),
                 destinationRectangle,
                 sprite.SourceRectangle,
                 tint,
-                gameObject.Transform.rotation,
+                gameObject.Transform.Rotation,
                 sprite.AbsolutePivot,
                 effects,
                 0f);

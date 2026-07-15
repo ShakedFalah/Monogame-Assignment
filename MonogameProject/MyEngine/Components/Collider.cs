@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using MonogameProject.MyEngine.GameObjects;
 using System;
 
 namespace MonogameProject.MyEngine.Components
@@ -8,6 +9,7 @@ namespace MonogameProject.MyEngine.Components
         public bool IsTrigger { get; set; }
         private Point offSet = Point.Zero;
         private Point? _overrideSize = null;
+        public Rectangle? Bounds { get; private set; }
 
         public event Action<Collider> OnCollisionEnter;
         public event Action<Collider> OnCollisionStay;
@@ -17,51 +19,65 @@ namespace MonogameProject.MyEngine.Components
         public event Action<Collider> OnTriggerStay;
         public event Action<Collider> OnTriggerExit;
 
-        public Rectangle GetCollider()
+        public override void Initialize(GameObject parent)
         {
-            Point baseSize = GetBaseSize();
+            base.Initialize(parent);
+
+            gameObject.Transform.onTransformChange += (transform) => UpdateCollider();
+            UpdateCollider();
+        }
+        public void UpdateCollider()
+        {
+            if (!TryGetBaseSize(out Point baseSize))
+            {
+                Bounds = null;
+                return;
+            }
 
             Point scaledSize = new(
-                (int)Math.Round(baseSize.X * gameObject.Transform.scale.X),
-                (int)Math.Round(baseSize.Y * gameObject.Transform.scale.Y));
+                (int)Math.Round(baseSize.X * gameObject.Transform.Scale.X),
+                (int)Math.Round(baseSize.Y * gameObject.Transform.Scale.Y));
 
             Point position = new(
-                (int)Math.Round(gameObject.Transform.position.X - scaledSize.X * 0.5f),
-                (int)Math.Round(gameObject.Transform.position.Y - scaledSize.Y * 0.5f));
+                (int)Math.Round(gameObject.Transform.Position.X - scaledSize.X * 0.5f),
+                (int)Math.Round(gameObject.Transform.Position.Y - scaledSize.Y * 0.5f));
 
             Point scaledOffset = new(
-                (int)Math.Round(offSet.X * gameObject.Transform.scale.X),
-                (int)Math.Round(offSet.Y * gameObject.Transform.scale.Y));
+                (int)Math.Round(offSet.X * gameObject.Transform.Scale.X),
+                (int)Math.Round(offSet.Y * gameObject.Transform.Scale.Y));
 
             position += scaledOffset;
-            return new Rectangle(position, scaledSize);
+            Bounds = new Rectangle(position, scaledSize);
         }
         public void SetSize(Point? size)
         {
             this._overrideSize = size;
+            UpdateCollider();
         }
 
-        private Point GetBaseSize()
+        private bool TryGetBaseSize(out Point size)
         {
             if (_overrideSize.HasValue)
             {
-                return _overrideSize.Value;
+                size = _overrideSize.Value;
+                return true;
             }
 
             SpriteRenderer renderer = gameObject.GetComponent<SpriteRenderer>();
 
-            if (renderer == null)
+            if (renderer != null)
             {
-                throw new InvalidOperationException(
-                    "Collider requires either an explicit size or a SpriteRenderer.");
+                size = renderer.size.ToPoint();
+                return true;
             }
 
-            return renderer.size.ToPoint();
+            size = default;
+            return false;
         }
 
         public bool CheckCollision(Collider other)
         {
-            return GetCollider().Intersects(other.GetCollider());
+            return Bounds.Value.Intersects(other.Bounds.Value);
         }
 
         public void CollisionEnter(Collider other)

@@ -16,7 +16,7 @@ namespace MonogameProject
 
         public override void Update(GameTime gameTime)
         {
-            gameObject.Transform.position += movingDirection * speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+            gameObject.Transform.Position += movingDirection * speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
         }
 
         public void OnMove(Vector2 direction)

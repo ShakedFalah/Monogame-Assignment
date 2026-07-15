@@ -15,7 +15,7 @@ namespace MonogameProject.MyEngine.Components
             Id = _nextId++;
         }
 
-        public void Initialize(GameObject gameObject)
+        public virtual void Initialize(GameObject gameObject)
         {
             this.gameObject = gameObject;
         }

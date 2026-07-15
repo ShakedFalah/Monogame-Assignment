@@ -35,7 +35,7 @@ namespace MonogameProject.MyEngine.Components
         public void Render(SpriteBatch spriteBatch)
         {
             Transform transform = gameObject.Transform;
-            spriteBatch.DrawString(_textSprite.font, _textSprite.text, transform.position, color, transform.rotation, _textSprite.AbsolutePivot, transform.scale, spriteEffects, 0);
+            spriteBatch.DrawString(_textSprite.font, _textSprite.text, transform.Position, color, transform.Rotation, _textSprite.AbsolutePivot, transform.Scale, spriteEffects, 0);
         }
 
         public UIText SetLayer(RenderLayer layer)

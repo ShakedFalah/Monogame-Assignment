@@ -84,7 +84,7 @@ namespace MonogameProject.MyEngine.Components
 
             Sprite sprite = _spriteRenderer.sprite;
 
-            Vector2 objectSize = _spriteRenderer.size * gameObject.Transform.scale;
+            Vector2 objectSize = _spriteRenderer.size * gameObject.Transform.Scale;
             Point size = sprite.SourceRectangle.Size * objectSize.ToPoint();
             //Point size = new Point(
             //    (int)(sprite.SourceRectangle.Width * _spriteRenderer.size.X * gameObject.Transform.scale.X),
@@ -92,7 +92,7 @@ namespace MonogameProject.MyEngine.Components
 
             Vector2 scaledOrigin = sprite.AbsolutePivot * objectSize;
 
-            Point topLeft = (gameObject.Transform.position - scaledOrigin).ToPoint();
+            Point topLeft = (gameObject.Transform.Position - scaledOrigin).ToPoint();
 
             return new Rectangle(topLeft, size);
         }

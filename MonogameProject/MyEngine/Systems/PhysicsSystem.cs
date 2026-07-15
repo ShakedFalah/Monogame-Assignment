@@ -16,6 +16,7 @@ namespace MonogameProject.MyEngine.Systems
         public void FixedUpdate(float deltaTime)
         {
             ApplyGravity(deltaTime);
+            MoveRigidBodies(deltaTime);
             ResolveCollisions();
         }
 
