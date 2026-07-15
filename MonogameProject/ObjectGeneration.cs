@@ -4,6 +4,8 @@ using MonogameProject.MyEngine.Components;
 using MonogameProject.MyEngine.GameObjects;
 using MonogameProject.MyEngine.Rendering;
 using MonogameProject.MyEngine.Sprites;
+using System;
+using System.Collections.Generic;
 
 namespace MonogameProject
 {
