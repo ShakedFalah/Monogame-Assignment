@@ -49,6 +49,7 @@ namespace MonogameProject.MyEngine
             Assets.Initialize();
             LayerManager.Initialize();
             SceneManager.Initialize();
+            DebugDraw.Initialize(graphicsDevice);
         }
 
         public void Load()

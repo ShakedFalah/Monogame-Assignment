@@ -2,17 +2,20 @@
 using MonogameProject.MyEngine.Components;
 using MonogameProject.MyEngine.Interfaces;
 using MonogameProject.MyEngine.Physics;
+using MonogameProject.MyEngine.Rendering;
 using System;
 using System.Collections.Generic;
 
 namespace MonogameProject.MyEngine.Systems
 {
-    internal class PhysicsSystem : IFixedUpdateSystem, Interfaces.IRegisterable<object>
+    internal class PhysicsSystem : IFixedUpdateSystem, IRenderSystem, Interfaces.IRegisterable<object>
     {
         private readonly List<Collider> _colliders = new();
         private readonly List<Rigidbody> _rigidbodies = new();
         private readonly Dictionary<CollisionPair, CollisionInfo> _previous = new();
         private readonly Dictionary<CollisionPair, CollisionInfo> _current = new(); public Vector2 Gravity { get; set; } = new Vector2(0, 980);
+
+        public bool debugDrawColliders = false;
 
         public void FixedUpdate(float deltaTime)
         {
@@ -226,6 +229,19 @@ namespace MonogameProject.MyEngine.Systems
             if (subscriber is Rigidbody rigidbody)
             {
                 _rigidbodies.Remove(rigidbody);
+            }
+        }
+
+        public void Render()
+        {
+            if (!debugDrawColliders)
+            {
+                return;
+            }
+
+            foreach (Collider collider in _colliders)
+            {
+                DebugDraw.DrawRectangle(collider.Bounds.Value, Color.Red);
             }
         }
     }

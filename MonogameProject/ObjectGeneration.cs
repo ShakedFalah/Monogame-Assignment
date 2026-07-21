@@ -77,7 +77,6 @@ namespace MonogameProject
             Rigidbody rb = player.AddComponent<Rigidbody>();
             rb.Drag = 20f;
             rb.GravityScale = 0;
-            player.AddComponent<DrawCollider>().color = Color.Red;
         }
         
         public void Background(Scene scene)
@@ -102,7 +101,6 @@ namespace MonogameProject
             buildingRenderer.SetSize(new Vector2(200, 400));
             Rigidbody rb = building.AddComponent<Rigidbody>();
             rb.Type = RigidbodyType.Static;
-            building.AddComponent<DrawCollider>().color = Color.Red;
 
         }
         public void SetSceneToGame()

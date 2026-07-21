@@ -41,6 +41,7 @@ namespace MonogameProject
             objectGeneration.Player(gameScene);
             objectGeneration.Building(gameScene);
             objectGeneration.Background(gameScene);
+            gameScene.Physics.debugDrawColliders = true;
 
             Engine.Instance.Load();
         }

@@ -1,13 +1,13 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MonogameProject.MyEngine.Interfaces;
-using System;
+using MonogameProject.MyEngine.Rendering;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace MonogameProject.MyEngine.Systems
 {
-    internal class RenderSystem : IUpdateSystem, Interfaces.IRegisterable<object>
+    internal class RenderSystem : IRenderSystem, Interfaces.IRegisterable<object>
     {
         private GraphicsDevice _graphicsDevice;
         private readonly HashSet<Interfaces.IRenderable> _renderables;
@@ -20,7 +20,7 @@ namespace MonogameProject.MyEngine.Systems
             _renderables = new();
         }
 
-        public void Update(GameTime gameTime)
+        public void Render()
         {
             _graphicsDevice.Clear(Color.CornflowerBlue);
             _spriteBatch.Begin(SpriteSortMode.Deferred);
@@ -30,6 +30,8 @@ namespace MonogameProject.MyEngine.Systems
             {
                 renderable.Render(_spriteBatch);
             }
+
+            DebugDraw.Draw(_spriteBatch);
             _spriteBatch.End();
         }
 

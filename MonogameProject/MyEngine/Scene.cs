@@ -35,7 +35,8 @@ namespace MonogameProject.MyEngine
 
         public void Draw(GameTime gameTime)
         {
-            Renderer.Update(gameTime);
+            Physics.Render();
+            Renderer.Render();
         }
 
         public void RegisterAll(object obj)
