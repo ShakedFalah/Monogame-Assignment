@@ -8,15 +8,17 @@ namespace MonogameProject
     {
         private float speed = 500f;
         private Vector2 movingDirection = Vector2.Zero;
+        private Rigidbody rigidbody;
         public override void Start()
         {
             Engine.InputManager.GetAction<Vector2>("Move").Performed += OnMove;
             Engine.InputManager.GetAction<Vector2>("Move").Canceled += OnMove;
+            rigidbody = gameObject.GetComponent<Rigidbody>();
         }
 
-        public override void Update(GameTime gameTime)
+        public override void FixedUpdate(float deltaTime)
         {
-            gameObject.Transform.Position += movingDirection * speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+            rigidbody.AddForce(movingDirection * speed);
         }
 
         public void OnMove(Vector2 direction)

@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using MonogameProject.MyEngine.GameObjects;
+using MonogameProject.MyEngine.Physics;
 using System;
 
 namespace MonogameProject.MyEngine.Components
@@ -108,6 +109,54 @@ namespace MonogameProject.MyEngine.Components
         public void TriggerExit(Collider other)
         {
             OnTriggerExit?.Invoke(other);
+        }
+
+        public bool TryGetCollisionInfo(Collider other, out CollisionInfo info)
+        {
+            info = default;
+
+            if (!Bounds.Value.Intersects(other.Bounds.Value))
+                return false;
+
+            Rectangle a = Bounds.Value;
+            Rectangle b = other.Bounds.Value;
+
+            float overlapX = Math.Min(a.Right, b.Right) - Math.Max(a.Left, b.Left);
+            float overlapY = Math.Min(a.Bottom, b.Bottom) - Math.Max(a.Top, b.Top);
+            float penetration;
+
+            Vector2 normal;
+
+            if (overlapX <= overlapY)
+            {
+                if (a.Center.X < b.Center.X)
+                {
+                    normal = Vector2.UnitX;
+                }
+                else
+                {
+                    normal = -Vector2.UnitX;
+                }
+
+                penetration = overlapX;
+            }
+            else
+            {
+                if (a.Center.Y < b.Center.Y)
+                {
+                    normal = Vector2.UnitY;
+                }
+                else
+                {
+                    normal = -Vector2.UnitY;
+                }
+
+                penetration = overlapY;
+            }
+
+            info = new CollisionInfo(this, other, normal, penetration);
+
+            return true;
         }
     }
 }

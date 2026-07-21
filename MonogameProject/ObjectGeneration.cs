@@ -4,8 +4,6 @@ using MonogameProject.MyEngine.Components;
 using MonogameProject.MyEngine.GameObjects;
 using MonogameProject.MyEngine.Rendering;
 using MonogameProject.MyEngine.Sprites;
-using System;
-using System.Collections.Generic;
 
 namespace MonogameProject
 {
@@ -76,6 +74,10 @@ namespace MonogameProject
             }
 
             playerAnimator.SetClip(clip);
+            Rigidbody rb = player.AddComponent<Rigidbody>();
+            rb.Drag = 20f;
+            rb.GravityScale = 0;
+            player.AddComponent<DrawCollider>().color = Color.Red;
         }
         
         public void Background(Scene scene)
@@ -98,6 +100,9 @@ namespace MonogameProject
             buildingSprite.SetTexture(Engine.Assets.GetImage("Building"));
             buildingRenderer.sprite = buildingSprite;
             buildingRenderer.SetSize(new Vector2(200, 400));
+            Rigidbody rb = building.AddComponent<Rigidbody>();
+            rb.Type = RigidbodyType.Static;
+            building.AddComponent<DrawCollider>().color = Color.Red;
 
         }
         public void SetSceneToGame()
